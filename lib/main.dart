@@ -1,22 +1,24 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 
-import '/providers/theme_provider.dart';
-import '/providers/sign_in_provider.dart';
+import '/providers_helpers/theme_provider.dart';
+import '/providers_helpers/sign_in_provider.dart';
 
 import '/config/firebase_options.dart';
 
 import '/utils/app_theme.dart';
 
-import '/home.dart';
+import 'config/home.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await dotenv.load(fileName: ".env");
   final isDarkTheme = await ThemeProvider.getTheme();
   runApp(MyApp(isDarkTheme: isDarkTheme));
 }

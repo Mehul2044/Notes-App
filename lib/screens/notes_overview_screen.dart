@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '/providers/sign_in_provider.dart';
+import '/providers_helpers/sign_in_provider.dart';
 
 import '/widgets/popup_menu_widget.dart';
 

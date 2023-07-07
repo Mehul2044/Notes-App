@@ -15,6 +15,7 @@ class SplashScreen extends StatelessWidget {
       children: [
         SvgPicture(
           AssetBytesLoader(Constants.appLogo),
+          height: 100,
         ),
         Text(Constants.appName,
             style: Theme.of(context).textTheme.displayLarge),

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '/providers/theme_provider.dart';
-import '/providers/sign_in_provider.dart';
+import '/providers_helpers/theme_provider.dart';
+import '/providers_helpers/sign_in_provider.dart';
 
 class PopupMenuWidget extends StatelessWidget {
   const PopupMenuWidget({super.key});
@@ -12,16 +12,6 @@ class PopupMenuWidget extends StatelessWidget {
     final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
     return PopupMenuButton(
       itemBuilder: (context) => [
-        const PopupMenuItem(
-          value: "view profile",
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Icon(Icons.person),
-              Text("View Profile"),
-            ],
-          ),
-        ),
         PopupMenuItem(
           value: "change theme",
           child: Row(
