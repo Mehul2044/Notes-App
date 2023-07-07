@@ -4,14 +4,14 @@ import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 
+import '/providers_helpers/note_provider.dart';
 import '/providers_helpers/theme_provider.dart';
 import '/providers_helpers/sign_in_provider.dart';
 
 import '/config/firebase_options.dart';
+import 'config/home.dart';
 
 import '/utils/app_theme.dart';
-
-import 'config/home.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,6 +34,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => SignInProvider()),
         ChangeNotifierProvider(create: (_) => ThemeProvider()),
+        ChangeNotifierProvider(create: (_) => NoteProvider()),
       ],
       child: Consumer<ThemeProvider>(
           builder: (context, provider, child) {

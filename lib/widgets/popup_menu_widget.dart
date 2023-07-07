@@ -27,7 +27,7 @@ class PopupMenuWidget extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Icon(Icons.exit_to_app),
+              Icon(Icons.logout),
               Text("Log Out"),
             ],
           ),
