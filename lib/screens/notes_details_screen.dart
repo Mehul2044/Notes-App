@@ -103,7 +103,6 @@ class _NotesDetailScreenState extends State<NotesDetailScreen> {
                 ),
                 const SizedBox(height: 20),
                 const Divider(),
-                const SizedBox(height: 20),
                 InputArea(
                   isTitle: false,
                   noteObj: obj,

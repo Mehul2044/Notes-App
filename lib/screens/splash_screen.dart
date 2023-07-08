@@ -9,17 +9,20 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        SvgPicture(
-          AssetBytesLoader(Constants.appLogo),
-          height: 100,
+    return Scaffold(
+      body: Center(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SvgPicture(
+              AssetBytesLoader(Constants.appLogo),
+              height: 100,
+            ),
+            Text(Constants.appName,
+                style: Theme.of(context).textTheme.displayLarge),
+          ],
         ),
-        Text(Constants.appName,
-            style: Theme.of(context).textTheme.displayLarge),
-      ],
+      ),
     );
   }
 }
