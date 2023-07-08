@@ -101,7 +101,7 @@ class _NotesDetailScreenState extends State<NotesDetailScreen> {
                   formatDateTime(obj.creationTime),
                   style: Theme.of(context).textTheme.labelSmall,
                 ),
-                const SizedBox(height: 30),
+                const SizedBox(height: 20),
                 const Divider(),
                 const SizedBox(height: 20),
                 InputArea(
