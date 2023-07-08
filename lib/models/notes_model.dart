@@ -1,4 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
+
+import '/providers_helpers/encrypt_helper.dart';
 
 class Note with ChangeNotifier {
   final String noteId;
@@ -12,9 +16,16 @@ class Note with ChangeNotifier {
       this.body,
       required this.noteId});
 
-  Future<void> updateNote(String? title, String? body) async {
+  void updateNote(String? title, String? body) {
     if (title != null) this.title = title;
     if (body != null) this.body = body;
+    final String userId = FirebaseAuth.instance.currentUser!.uid;
+    final CollectionReference userCollection =
+        FirebaseFirestore.instance.collection(userId);
+    final Map<String, dynamic> data = {};
+    if (title != null) data['title'] = EncryptHelper.encrypt(title);
+    if (body != null) data['body'] = EncryptHelper.encrypt(body);
+    userCollection.doc(noteId).update(data);
     notifyListeners();
   }
 }

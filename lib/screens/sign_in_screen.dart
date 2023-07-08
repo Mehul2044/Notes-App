@@ -35,7 +35,7 @@ class SignInScreen extends StatelessWidget {
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 25),
                 child: ElevatedButton(
-                  onPressed: () => provider.signIn(),
+                  onPressed: () => provider.signIn(context),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
