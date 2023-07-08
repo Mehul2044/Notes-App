@@ -20,29 +20,29 @@ class InputArea extends StatefulWidget {
 }
 
 class _InputAreaState extends State<InputArea> {
-  CancelableOperation? _debounceOperation;
-  final List<String?> _changeBuffer = [];
+  final List<String?> buffer = [];
+  CancelableOperation? debounceOperation;
 
   @override
   void dispose() {
     // TODO: implement dispose
     widget.textEditingController.dispose();
-    _debounceOperation?.cancel();
+    debounceOperation?.cancel();
     super.dispose();
   }
 
   void _debouncedUpdate(String? value) {
-    _changeBuffer.add(value);
-    _debounceOperation?.cancel();
-    _debounceOperation = CancelableOperation.fromFuture(
-      Future.delayed(const Duration(milliseconds: 1000), () {
-        if (_changeBuffer.isNotEmpty) {
-          final batchUpdate = _changeBuffer.join();
-          _changeBuffer.clear();
+    buffer.add(value);
+    debounceOperation?.cancel();
+    debounceOperation = CancelableOperation.fromFuture(
+      Future.delayed(const Duration(seconds: 1), () {
+        if (buffer.isNotEmpty) {
+          final updatedValue = buffer.last;
+          buffer.clear();
           if (widget.isTitle) {
-            widget.noteObj.updateNote(batchUpdate, null);
+            widget.noteObj.updateNote(updatedValue, null);
           } else {
-            widget.noteObj.updateNote(null, batchUpdate);
+            widget.noteObj.updateNote(null, updatedValue);
           }
         }
       }),

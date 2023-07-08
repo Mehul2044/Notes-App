@@ -23,8 +23,12 @@ class Note with ChangeNotifier {
     final CollectionReference userCollection =
         FirebaseFirestore.instance.collection(userId);
     final Map<String, dynamic> data = {};
-    if (title != null) data['title'] = EncryptHelper.encrypt(title);
-    if (body != null) data['body'] = EncryptHelper.encrypt(body);
+    if (title != null) {
+      data['title'] = title.isEmpty ? null : EncryptHelper.encrypt(title);
+    }
+    if (body != null) {
+      data['body'] = body.isEmpty ? null : EncryptHelper.encrypt(body);
+    }
     userCollection.doc(noteId).update(data);
     notifyListeners();
   }
