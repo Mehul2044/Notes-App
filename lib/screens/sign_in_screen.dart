@@ -27,7 +27,7 @@ class SignInScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SvgPicture(AssetBytesLoader(Constants.appLogo), height: 100),
-                  Text(Constants.appName,
+                  Text("Notes",
                       style: Theme.of(context).textTheme.displayLarge),
                 ],
               ),

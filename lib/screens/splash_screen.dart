@@ -18,8 +18,10 @@ class SplashScreen extends StatelessWidget {
               AssetBytesLoader(Constants.appLogo),
               height: 100,
             ),
-            Text(Constants.appName,
-                style: Theme.of(context).textTheme.displayLarge),
+            Text(
+              "Notes",
+              style: Theme.of(context).textTheme.displayLarge,
+            ),
           ],
         ),
       ),

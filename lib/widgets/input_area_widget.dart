@@ -1,3 +1,4 @@
+import 'package:async/async.dart';
 import 'package:flutter/material.dart';
 
 import '../models/notes_model.dart';
@@ -19,11 +20,33 @@ class InputArea extends StatefulWidget {
 }
 
 class _InputAreaState extends State<InputArea> {
+  CancelableOperation? _debounceOperation;
+  final List<String?> _changeBuffer = [];
+
   @override
   void dispose() {
     // TODO: implement dispose
     widget.textEditingController.dispose();
+    _debounceOperation?.cancel();
     super.dispose();
+  }
+
+  void _debouncedUpdate(String? value) {
+    _changeBuffer.add(value);
+    _debounceOperation?.cancel();
+    _debounceOperation = CancelableOperation.fromFuture(
+      Future.delayed(const Duration(milliseconds: 1000), () {
+        if (_changeBuffer.isNotEmpty) {
+          final batchUpdate = _changeBuffer.join();
+          _changeBuffer.clear();
+          if (widget.isTitle) {
+            widget.noteObj.updateNote(batchUpdate, null);
+          } else {
+            widget.noteObj.updateNote(null, batchUpdate);
+          }
+        }
+      }),
+    );
   }
 
   @override
@@ -39,13 +62,7 @@ class _InputAreaState extends State<InputArea> {
       style: widget.isTitle
           ? Theme.of(context).textTheme.titleLarge
           : Theme.of(context).textTheme.bodyMedium,
-      onChanged: (value) {
-        if (widget.isTitle) {
-          widget.noteObj.updateNote(value, null);
-        } else {
-          widget.noteObj.updateNote(null, value);
-        }
-      },
+      onChanged: _debouncedUpdate,
     );
   }
 }
