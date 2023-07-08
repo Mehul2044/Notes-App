@@ -4,11 +4,22 @@ import 'package:provider/provider.dart';
 import '/providers_helpers/note_provider.dart';
 import '/providers_helpers/sign_in_provider.dart';
 
+import '/screens/notes_details_screen.dart';
+
 import '/widgets/note_widget.dart';
 import '/widgets/popup_menu_widget.dart';
 
 class NotesOverViewScreen extends StatelessWidget {
   const NotesOverViewScreen({super.key});
+
+  void _addNoteHandler(NoteProvider notesProvider, BuildContext context) async {
+    final navigator = Navigator.of(context);
+    notesProvider.addNote();
+    navigator.push(MaterialPageRoute(
+      builder: (context) => const NotesDetailScreen(),
+      settings: RouteSettings(arguments: notesProvider.list.last),
+    ));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +32,7 @@ class NotesOverViewScreen extends StatelessWidget {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => notesProvider.addNote(),
+        onPressed: () => _addNoteHandler(notesProvider, context),
         child: const Icon(Icons.add),
       ),
       body: Consumer<SignInProvider>(
@@ -36,7 +47,7 @@ class NotesOverViewScreen extends StatelessWidget {
                   children: [
                     const Text("No Notes to Display"),
                     TextButton.icon(
-                      onPressed: () => notesProvider.addNote(),
+                      onPressed: () => _addNoteHandler(notesProvider, context),
                       icon: const Icon(Icons.add),
                       label: const Text("Add a Note"),
                     ),
