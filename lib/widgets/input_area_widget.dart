@@ -35,7 +35,7 @@ class _InputAreaState extends State<InputArea> {
     buffer.add(value);
     debounceOperation?.cancel();
     debounceOperation = CancelableOperation.fromFuture(
-      Future.delayed(const Duration(seconds: 1), () {
+      Future.delayed(const Duration(milliseconds: 500), () {
         if (buffer.isNotEmpty) {
           final updatedValue = buffer.last;
           buffer.clear();
