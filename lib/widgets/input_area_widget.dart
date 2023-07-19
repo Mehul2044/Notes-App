@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:async/async.dart';
 import 'package:flutter/material.dart';
 
@@ -6,11 +8,11 @@ import '../models/notes_model.dart';
 class InputArea extends StatefulWidget {
   final bool isTitle;
   final Note noteObj;
-  final TextEditingController textEditingController;
+  final String? initialText;
 
   const InputArea({
     super.key,
-    required this.textEditingController,
+    required this.initialText,
     required this.noteObj,
     required this.isTitle,
   });
@@ -20,39 +22,41 @@ class InputArea extends StatefulWidget {
 }
 
 class _InputAreaState extends State<InputArea> {
-  final List<String?> buffer = [];
-  CancelableOperation? debounceOperation;
+  TextEditingController textEditingController = TextEditingController();
+  Timer? debounceTimer;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    textEditingController.text = widget.initialText ?? "";
+    super.initState();
+  }
 
   @override
   void dispose() {
     // TODO: implement dispose
-    widget.textEditingController.dispose();
-    debounceOperation?.cancel();
+    textEditingController.dispose();
     super.dispose();
   }
 
-  void _debouncedUpdate(String? value) {
-    buffer.add(value);
-    debounceOperation?.cancel();
-    debounceOperation = CancelableOperation.fromFuture(
-      Future.delayed(const Duration(milliseconds: 500), () {
-        if (buffer.isNotEmpty) {
-          final updatedValue = buffer.last;
-          buffer.clear();
-          if (widget.isTitle) {
-            widget.noteObj.updateNote(updatedValue, null);
-          } else {
-            widget.noteObj.updateNote(null, updatedValue);
-          }
+  void _debouncedUpdate(String? value) async {
+    debounceTimer?.cancel();
+    debounceTimer = Timer(
+      const Duration(milliseconds: 500),
+      () {
+        if (widget.isTitle) {
+          widget.noteObj.updateNote(value, null);
+        } else {
+          widget.noteObj.updateNote(null, value);
         }
-      }),
+      },
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return TextField(
-      controller: widget.textEditingController,
+      controller: textEditingController,
       decoration: InputDecoration(
         border: InputBorder.none,
         contentPadding: EdgeInsets.zero,

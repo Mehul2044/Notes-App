@@ -123,7 +123,7 @@ class NotesDetailScreen extends StatelessWidget {
               InputArea(
                 isTitle: true,
                 noteObj: obj,
-                textEditingController: TextEditingController(text: obj.title),
+                initialText: obj.title,
               ),
               Text(
                 formatDateTime(obj.creationTime),
@@ -134,7 +134,7 @@ class NotesDetailScreen extends StatelessWidget {
               InputArea(
                 isTitle: false,
                 noteObj: obj,
-                textEditingController: TextEditingController(text: obj.body),
+                initialText: obj.body,
               ),
               const SizedBox(height: 60),
             ],
