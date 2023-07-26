@@ -23,12 +23,8 @@ class NotesOverViewScreen extends StatelessWidget {
         floatingActionButton: notesProvider.list.isEmpty
             ? null
             : FloatingActionButton(
-                onPressed: notesProvider.isLoading
-                    ? null
-                    : () => notesProvider.addNote(),
-                child: notesProvider.isLoading
-                    ? const CircularProgressIndicator()
-                    : const Icon(Icons.add),
+                onPressed: () => notesProvider.addNote(),
+                child: const Icon(Icons.add),
               ),
         body: Consumer<SignInProvider>(
           builder: (context, signInProvider, _) {
@@ -42,13 +38,9 @@ class NotesOverViewScreen extends StatelessWidget {
                     children: [
                       const Text("No Notes to Display"),
                       TextButton.icon(
-                        onPressed: notesProvider.isLoading
-                            ? null
-                            : () => notesProvider.addNote(),
+                        onPressed: () => notesProvider.addNote(),
                         icon: const Icon(Icons.add),
-                        label: notesProvider.isLoading
-                            ? const CircularProgressIndicator()
-                            : const Text("Add a Note"),
+                        label: const Text("Add a Note"),
                       ),
                     ],
                   ),

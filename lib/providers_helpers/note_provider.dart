@@ -8,15 +8,12 @@ import '/models/notes_model.dart';
 
 class NoteProvider with ChangeNotifier {
   List<Note> _list = [];
-  bool isLoading = false;
 
   List<Note> get list {
     return [..._list];
   }
 
-  Future<void> addNote() async {
-    isLoading = true;
-    notifyListeners();
+  void addNote() async {
     final String userId = FirebaseAuth.instance.currentUser!.uid;
     final CollectionReference userCollection =
         FirebaseFirestore.instance.collection(userId);
@@ -25,7 +22,6 @@ class NoteProvider with ChangeNotifier {
       "creationTime": creationTime.toIso8601String(),
     });
     _list.add(Note(noteId: result.id, creationTime: creationTime));
-    isLoading = false;
     notifyListeners();
   }
 
