@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:async/async.dart';
 import 'package:flutter/material.dart';
 
 import '../models/notes_model.dart';
@@ -39,18 +38,12 @@ class _InputAreaState extends State<InputArea> {
     super.dispose();
   }
 
-  void _debouncedUpdate(String? value) async {
-    debounceTimer?.cancel();
-    debounceTimer = Timer(
-      const Duration(milliseconds: 500),
-      () {
-        if (widget.isTitle) {
-          widget.noteObj.updateNote(value, null);
-        } else {
-          widget.noteObj.updateNote(null, value);
-        }
-      },
-    );
+  void _updateNote(String? value) {
+    if (widget.isTitle) {
+      widget.noteObj.updateNote(value, null);
+    } else {
+      widget.noteObj.updateNote(null, value);
+    }
   }
 
   @override
@@ -66,7 +59,7 @@ class _InputAreaState extends State<InputArea> {
       style: widget.isTitle
           ? Theme.of(context).textTheme.titleLarge
           : Theme.of(context).textTheme.bodyMedium,
-      onChanged: _debouncedUpdate,
+      onChanged: _updateNote,
     );
   }
 }

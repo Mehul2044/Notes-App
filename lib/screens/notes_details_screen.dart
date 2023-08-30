@@ -83,6 +83,7 @@ class NotesDetailScreen extends StatelessWidget {
                 }
               },
               icon: const Icon(Icons.delete, size: 25),
+              tooltip: "Delete",
             ),
             const SizedBox(width: 30),
             IconButton(
@@ -97,10 +98,10 @@ class NotesDetailScreen extends StatelessWidget {
                 Fluttertoast.showToast(msg: "Note copied to Clipboard");
               },
               icon: const Icon(Icons.copy, size: 25),
+              tooltip: "Copy",
             ),
             IconButton(
-              onPressed: () async {
-                await Future.delayed(const Duration(milliseconds: 500));
+              onPressed: () {
                 String? textToShare = availableText(obj);
                 if (textToShare == null) {
                   Fluttertoast.showToast(msg: "Empty Note. Nothing to share!");
@@ -110,6 +111,7 @@ class NotesDetailScreen extends StatelessWidget {
                         "Note from ${FirebaseAuth.instance.currentUser!.displayName}");
               },
               icon: const Icon(Icons.share),
+              tooltip: "Share",
             ),
           ],
         ),
